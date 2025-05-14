@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    section {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="range"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    #rangeValue {
+      margin-left: 10px;
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <h2>Smart Contact Form</h2>
+    <form id="contactForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob">
+
+      <label for="satisfaction">Satisfaction Level (1–10): 
+        <span id="rangeValue">5</span>
+      </label>
+      <input type="range" id="satisfaction" name="satisfaction" min="1" max="10" value="5">
+
+      <input type="submit" value="Submit">
+      <p id="errorMsg" class="error"></p>
+    </form>
+  </section>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const range = document.getElementById('satisfaction');
+    const rangeValue = document.getElementById('rangeValue');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Update satisfaction level display
+    range.addEventListener('input', () => {
+      rangeValue.textContent = range.value;
+    });
+
+    // Basic JS form validation
+    form.addEventListener('submit', function (e) {
+      errorMsg.textContent = ''; // Clear previous error
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (name === '') {
+        errorMsg.textContent = 'Please enter your name.';
+        e.preventDefault();
+        return;
+      }
+
+      if (email !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errorMsg.textContent = 'Please enter a valid email address.';
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
